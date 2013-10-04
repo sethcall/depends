@@ -1,4 +1,4 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="generic-retrieval">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="generic-retrieval" default="retrieve">
     <target name="retrieve" description="retrieve artifacts">
         <!-- allow us to access environment variables -->
         <property environment="env" />
@@ -18,12 +18,12 @@
         <property name="env.BUILD_NUMBER" value="dev" />
         <property name="project.revision" value="${env.BUILD_NUMBER}" />
  
-        <condition property="resolver" value="artifact_server" else="filesystem">
+        <!--<condition property="resolver" value="artifact_server" else="filesystem">
             <istrue value="${artifact.server.enable}" />
-        </condition>
+        </condition>-->
 
         <ivy:settings file="ivysettings.xml" /> <!-- needed so that ivysettings.xml is used-->
-        <ivy:resolve conf="default" />
-        <ivy:retrieve  file="../ivy.xml" pattern="../lib/[artifact]-[revision].[ext]" conf="default" symlink="true" />
+        <ivy:resolve file="../ivy.xml" conf="default" />
+        <ivy:retrieve  file="../ivy.xml" pattern="../lib/[artifact].[ext]" conf="default" symlink="true" />
     </target>
 </project>
