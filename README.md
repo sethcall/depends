@@ -37,3 +37,14 @@ In a build script, call ant like so:
 
 ### Invoking Retrieval Script
 ```ant -f depends/retrieve.xml```
+
+
+Adding Depends as a Git Submodule
+---------------------------------
+
+There is nothing special about depends as a git submodule; this is just added as a convenience.
+```
+git submodule add git@github.com:sethcall/depends.git ./depends
+git submodule update --init
+git commit ./depends -m "Added submodule as ./depends"
+```
