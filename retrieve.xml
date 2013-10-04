@@ -1,0 +1,29 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="generic-retrieval">
+    <target name="retrieve" description="retrieve artifacts">
+        <!-- allow us to access environment variables -->
+        <property environment="env" />
+
+        <property file="${user.home}/.ivy/ivysettings.properties" />
+
+        <!-- used in ivysettings.xml for local resolver -->
+        <property name="env.IVY_LOCAL_REPO" value="${user.home}/.ivy/repo"/>
+        <property name="ivy.local.repo" value="${env.IVY_LOCAL_REPO}" />
+
+        <!-- default to using filesystem resolver -->
+        <condition property="artifact.server.enable" value="true" else="false">
+            <isset property="env.BUILD_NUMBER" />
+        </condition>
+
+        <!-- used in ivy.xml to indicate the build number --> 
+        <property name="env.BUILD_NUMBER" value="dev" />
+        <property name="project.revision" value="${env.BUILD_NUMBER}" />
+ 
+        <condition property="resolver" value="artifact_server" else="filesystem">
+            <istrue value="${artifact.server.enable}" />
+        </condition>
+
+        <ivy:settings file="ivysettings.xml" /> <!-- needed so that ivysettings.xml is used-->
+        <ivy:resolve conf="default" />
+        <ivy:retrieve  file="../ivy.xml" pattern="../lib/[artifact]-[revision].[ext]" conf="default" symlink="true" />
+    </target>
+</project>

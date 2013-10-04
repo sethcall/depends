@@ -1,0 +1,22 @@
+<ivysettings>
+    <properties file="${user.home}/.ivy/ivysettings.properties" />
+    <!--    <credentials host="${artifact.server.host}" 
+        realm="${artifact.server.realm}" 
+        username="${artifact.server.username}"
+        passwd="${artifact.server.password}"/>-->
+<credentials host="${artifact.server.host}" realm="Artifactory Realm" username="${artifact.server.username}" passwd="${artifact.server.password}" />
+               <settings defaultResolver="chain"/>
+
+               <resolvers>
+        <chain name="chain">
+            <url name="artifact_server" m2compatible="true">
+                <artifact pattern="${artifact.server.baseurl}/libs-release-local/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+                <ivy pattern="${artifact.server.baseurl}/libs-release-local/[organization]/[module]/[revision]/ivy-[revision].xml" />
+            </url>
+            <filesystem name="filesystem" m2compatible="true">
+                <artifact pattern="${ivy.local.repo}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+                <ivy pattern="${ivy.local.repo}/[organization]/[module]/[revision]/ivy-[revision].xml" />
+            </filesystem>
+        </chain>
+        </resolvers>
+</ivysettings>

@@ -1,0 +1,43 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="generic-publish" default="publish">
+    <target name="publish" description="publish artifacts">
+
+        <!-- allow us to access environment variables -->
+        <property environment="env" />
+
+        <property file="${user.home}/.ivy/ivysettings.properties" />
+
+        <!-- used in ivysettings.xml for local resolver -->
+        <property name="env.IVY_LOCAL_REPO" value="${user.home}/.ivy/repo"/>
+        <property name="ivy.local.repo" value="${env.IVY_LOCAL_REPO}" />
+
+        <!-- default to using filesystem resolver -->
+        <condition property="artifact.server.enable" value="true" else="false">
+            <isset property="env.BUILD_NUMBER" />
+        </condition>
+
+        <!-- used in ivy.xml to indicate the build number --> 
+        <property name="env.BUILD_NUMBER" value="dev" />
+        <property name="project.revision" value="${env.BUILD_NUMBER}" />
+ 
+        <condition property="resolver" value="artifact_server" else="filesystem">
+            <istrue value="${artifact.server.enable}" />
+        </condition>
+
+        <antcall target="prep-for-${resolver}"/>
+
+        <!-- needed so that ivysettings.xml is used-->
+        <ivy:settings />
+
+        <ivy:resolve file="../ivy.xml"/>
+        <ivy:publish  organisation="${my.org}" module="${project.module}"  artifactspattern="../target/artifacts/[artifact].[ext]" resolver="${resolver}" srcivypattern="../ivy.xml" update="true" overwrite="true">
+      </ivy:publish>
+  </target>
+
+  <target name="prep-for-artifact_server" description="Do anything needed before publishing to artifactory">
+
+  </target>
+
+  <target name="prep-for-filesystem" description="Do anything needed before publishing to filesystem">
+    <mkdir dir="${ivy.local.repo}"/>
+  </target>
+</project>
