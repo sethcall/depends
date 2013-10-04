@@ -47,4 +47,6 @@ There is nothing special about depends as a git submodule; this is just added as
 git submodule add https://github.com/sethcall/depends.git ./depends
 git submodule update --init
 git commit ./depends -m "Added submodule as ./depends"
+git add .gitmodules
+git commit -m "* updating submodules"
 ```
