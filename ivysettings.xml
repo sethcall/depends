@@ -17,6 +17,7 @@
                 <artifact pattern="${ivy.local.repo}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
                 <ivy pattern="${ivy.local.repo}/[organization]/[module]/[revision]/ivy-[revision].xml" />
             </filesystem>
+            <ibiblio name="artifactory" m2compatible="true" root="${artifact.server.baseurl}/libs-release-local"/>
         </chain>
         </resolvers>
 </ivysettings>
