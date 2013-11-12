@@ -9,6 +9,7 @@
         <!-- used in ivysettings.xml for local resolver -->
         <property name="env.IVY_LOCAL_REPO" value="${user.home}/.ivy/repo"/>
         <property name="ivy.local.repo" value="${env.IVY_LOCAL_REPO}" />
+        <property name="platform" value="noarch" />
 
         <!-- default to using filesystem resolver -->
         <condition property="artifact.server.enable" value="true" else="false">
